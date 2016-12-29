@@ -33,7 +33,8 @@ var sidebar    = $('#sidebar'),
 //}
 var clickHandler = function(id) {
   return function() {
-    $(this).addClass('active').siblings().removeClass('active');
+    $(this).addClass('active').siblings().removeClass('active');  //相当于$('#tags__ul li').removeClass('active');
+                                                                  //$(this).addClass('active');
     $('.pl__all').hide();
     $('.' + id).delay(50).fadeIn(350);
   }

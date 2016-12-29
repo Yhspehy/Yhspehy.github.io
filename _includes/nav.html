@@ -1,31 +1,32 @@
-<aside id="sidebar">
-  <nav id="tags">
-    <a href="/index.html" id="avatar"></a>
-    <ul id="tags__ul">
-      <li id="pl__all" class="tags__li tags-btn active">所有文章</li>
-      {% assign sorted_tags = (site.tags | sort) %}
-      {% for tag in sorted_tags %} 
-      <li id="{{ tag[0] }}" class="tags__li tags-btn">{{ tag[0] }}</li>
-      {% endfor %}
-    </ul>
+ <aside id="sidebar">
+      <nav id="tags">
+        <a href="/index.html" id="avatar"></a>
+        <ul id="tags__ul">
+          <li id="pl__all" class="tags__li tags-btn active">所有文章</li>
+          {% assign sorted_tags = (site.tags | sort) %}
+          {% for tag in sorted_tags %} 
+            <li id="{{ tag[0] }}" class="tags__li tags-btn">{{ tag[0] }}</li>
+          {% endfor %}
+        </ul>
 
-    <div id="tags__bottom">
-      <a href="mailto:coffee.zyr@gmail.com" id="icon-email" class="tags-btn fontello"></a>
-      <a href="http://coffeechou.github.io/pages/rss.xml" id="icon-feed" class="tags-btn fontello"></a>
-    </div>
-  </nav> <!-- end #tags -->
+        <div id="tags__bottom">
+          <a href="mailto:yhspehy@gmail.com" id="icon-email" class="tags-btn fontello"></a>
+          <a href="http://yhspehy.github.io/pages/rss.xml" id="icon-feed" class="tags-btn fontello"></a>
+        </div>
+      </nav> <!-- end #tags -->
 
-  <div id="posts-list">
-    <form action="" id="search-form">
-      <a href="/index.html" id="mobile-avatar"></a>
-      <!-- NOTE: input field is disabled by default -->
-      <input id="search-input" type="text" placeholder="Search..." disabled >
-    </form>
+      <div id="posts-list">
+        <form action="" id="search-form">
+          <a href="/index.html" id="mobile-avatar"></a>
+          <!-- NOTE: input field is disabled by default -->
+          <input id="search-input" type="text" placeholder="Search..." disabled >
+        </form>
 
-    <nav id="pl__container">
-      {% for post in site.posts %}
-      <a class="{{ post.categories }} pl__all" href="{{ post.url }}"><span class="pl__circle"></span><span class="pl__title">{{ post.title }}</span><span class="pl__date">{{ post.date | date: "%b %Y" }}</span></a>
-      {% endfor %}
-    </nav>
-  </div> <!-- end #posts-list -->
+        <nav id="pl__container">
+        {% for post in site.posts %}
+          <!--<a class="{{ post.categories }} pl__all" href="{{ post.url }}"><span class="pl__circle"></span><span class="pl__title">{{ post.title }}</span><span class="pl__date">{{ post.date | date: "%b %Y" }}</span></a>-->
+          <a class="{% for tag in post.tags %}{{ tag }} {% endfor %} pl__all" href="{{ post.url }}"><span class="pl__circle"></span><span class="pl__title">{{ post.title }}</span><span class="pl__date">{{ post.date | date: "%b %Y" }}</span></a>
+        {% endfor %}
+        </nav>
+      </div> <!-- end #posts-list -->
     </aside> <!-- end #sidebar -->
