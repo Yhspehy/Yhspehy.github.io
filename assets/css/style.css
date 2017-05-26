@@ -357,13 +357,17 @@ a {
 /*---------------------------------*\
    Post
 \*---------------------------------*/
+#c_n149 {
+  background: rgb(64,64,64);
+}
+
 #post {
   height: 100%;
   color: #D9D6CF;
   font-family: Yuppy;
   font-size: 18px;
   line-height: 1.8;
-  background: #404040;
+  position: relative;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch; }
