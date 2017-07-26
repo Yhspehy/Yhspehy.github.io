@@ -426,7 +426,9 @@ table th {
     color:#ffffff;}
 
 #pjax {
-  padding: 0 5% 30px; }
+  padding: 0 5% 30px;
+  background-color: rgb(64,64,64);
+  }
   #pjax.fadeIn {
     -webkit-animation: fadeIn .3s;
     -moz-animation: fadeIn .3s;
