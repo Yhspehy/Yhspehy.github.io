@@ -191,6 +191,21 @@ function afterPjax() {
   function k() {
     r = u.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
     n = u.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    pp.height = n
+    pp.width = r
+    if ($(window).width() <= 1280) {
+      $('#sidebar').addClass('mobile');
+      console.log(e)
+      console.log(r)
+      console.log(n)
+      e.clearRect(0, 0, r, n);
+      t = []
+    } else {
+      $('#sidebar').removeClass('mobile');
+      setTimeout(function() {
+        b()
+      }, 100)
+    }
   }
   function b() {
     e.clearRect(0, 0, r, n);
@@ -223,6 +238,8 @@ function afterPjax() {
     }),
     m(b)
   }
+
+  var pp = document.getElementById('c_n149')
   var u = document.createElement("canvas"), s = l(), c = "c_n" + s.l, e = u.getContext("2d"), r, n, m = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(i) {
     window.setTimeout(i, 1000 / 45)
   }
@@ -260,8 +277,10 @@ function afterPjax() {
       max: 6000
     })
   }
-  setTimeout(function() {
-    b()
-  }, 100)
+  
+    // setTimeout(function() {
+    //   b()
+    // }, 100)
+
 }();
 
