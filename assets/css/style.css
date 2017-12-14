@@ -488,6 +488,7 @@ strong {
 
 blockquote {
   margin: 1.5em 0 1.5em 2em;
+  font-family: '微软雅黑';
   padding-left: .5em;
   border-left: 5px solid #e5e8ec; }
 
@@ -1030,7 +1031,7 @@ pre > code {
 /* Inline code */
 :not(pre) > code {
   padding: .25em .5em .1em;
-  color: #33caa6;
+  color: #1C86D1;
   font: .85em Consolas, Monaco, 'Andale Mono', monospace;
   background: #fafafa;
   border: 1px solid #e5e8ec;

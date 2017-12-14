@@ -185,7 +185,7 @@ function afterPjax() {
       z: o(v, "zIndex", -1),
       o: o(v, "opacity", 1),
       c: o(v, "color", "255,255,153"),
-      n: o(v, "count", 49)
+      n: o(v, "count", 30)
     }
   }
   function k() {
@@ -195,16 +195,10 @@ function afterPjax() {
     pp.width = r
     if ($(window).width() <= 1280) {
       $('#sidebar').addClass('mobile');
-      console.log(e)
-      console.log(r)
-      console.log(n)
       e.clearRect(0, 0, r, n);
       t = []
     } else {
       $('#sidebar').removeClass('mobile');
-      setTimeout(function() {
-        b()
-      }, 100)
     }
   }
   function b() {
@@ -278,9 +272,9 @@ function afterPjax() {
     })
   }
   
-    // setTimeout(function() {
-    //   b()
-    // }, 100)
+    setTimeout(function() {
+      b()
+    }, 100)
 
 }();
 
