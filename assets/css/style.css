@@ -353,7 +353,7 @@ a {
 
 .pl__title {
   display: inline-block;
-  width: calc(100% - 80px);
+  width: calc(100% - 90px);
 }
 
 .pl__date {

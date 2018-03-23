@@ -9,6 +9,8 @@ var disqus_url = 'http://yhspehy.github.io';
 })();
 
 var reset = function (newIdentifier, newUrl) {
+  console.log('reset')
+  console.log(DISQUS)
   DISQUS.reset({
     reload: true,
     config: function () {
