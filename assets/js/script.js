@@ -172,18 +172,18 @@ function afterPjax() {
   //window.disqus_shortname = 'coffeechou';
   //window.disqus_identifier = identifier;
 
-  // function check() {
-  //   if ( !ds_loaded && container.scrollTop() + container.height() > top ) {
-  //     $.ajax({
-  //       type: 'GET',
-  //       url: 'http://' + disqus_shortname + '.disqus.com/embed.js',
-  //       dataType: 'script',
-  //       cache: true
-  //     });
-  //     ds_loaded = true;
-  //   }
-  // }check();
-  // container.scroll(check);
+  function check() {
+    if ( !ds_loaded && container.scrollTop() + container.height() > top ) {
+      $.ajax({
+        type: 'GET',
+        url: 'https://' + disqus_shortname + '.disqus.com/embed.js',
+        dataType: 'script',
+        cache: true
+      });
+      ds_loaded = true;
+    }
+  }check();
+  container.scroll(check);
 }afterPjax();
 
 
