@@ -316,6 +316,7 @@ a {
   margin: 4px 12px;
   padding: 4px 8px 3px;
   border-radius: 4px;
+  overflow: hidden;
   display: block; }
   .pl__all:hover {
     background: rgba(242, 242, 242, 0.5); }
@@ -338,20 +339,27 @@ a {
 .pl__circle {
   width: .75em;
   height: .75em;
-  margin-right: 5px;
+  margin: 5px 5px 5px 0;
   background: #9aa4af;
   border: 2px solid #9aa4af;
   border-radius: 50%;
   display: inline-block;
+  vertical-align: top;
   -webkit-transition: border-color .35s;
   -moz-transition: border-color .35s;
   -ms-transition: border-color .35s;
   -o-transition: border-color .35s;
   transition: border-color .35s; }
 
+.pl__title {
+  display: inline-block;
+  width: calc(100% - 80px);
+}
+
 .pl__date {
   color: #9aa4af;
   font-size: 14px;
+  margin-top: 1px;
   float: right; }
 
 /*---------------------------------*\

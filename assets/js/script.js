@@ -45,15 +45,21 @@ var clickHandler = function(id) {
                                                                   //$(this).addClass('active');
     $('.pl__all').hide();
     $('.' + id).delay(50).fadeIn(350);
-    if (sidebar.hasClass('mobile')) {
-      sidebar.addClass('fullscreen');
-    }
   }
 };
 
 $('#tags__ul li').each(function(index){
   $('#' + $(this).attr('id')).on('click', clickHandler($(this).attr('id')));
 });
+
+$('#pl__container a').each(function(index) {
+  $(this).click(function () {
+    if ($(window).width() <= 1280) {
+      sidebar.addClass('fullscreen');
+      button.addClass('fullscreen');
+    }
+  })
+})
 
 // If sidebar has class 'mobile', hide it after clicking.
 //tag1.on('click', function() {
@@ -180,6 +186,10 @@ function afterPjax() {
   // container.scroll(check);
 }afterPjax();
 
+
+
+
+
 !function() {
   function o(w, v, i) {
     return w.getAttribute(v) || i
@@ -196,7 +206,7 @@ function afterPjax() {
       z: o(v, "zIndex", -1),
       o: o(v, "opacity", 1),
       c: o(v, "color", "255,255,153"),
-      n: o(v, "count", 30)
+      n: o(v, "count", 60)
     }
   }
   function k() {
@@ -283,9 +293,11 @@ function afterPjax() {
     })
   }
   
-  setTimeout(function() {
-    b()
-  }, 100)
+  if ($(window).width() >= 1280) {
+    setTimeout(function() {
+      b()
+    }, 100)
+  }
 
 }();
 
