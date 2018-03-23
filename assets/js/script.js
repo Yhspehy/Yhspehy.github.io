@@ -165,35 +165,28 @@ function afterPjax() {
 
   // Lazy Loading Disqus
   // http://jsfiddle.net/dragoncrew/SHGwe/1/
-  var ds_loaded = false,
-      top = $('#disqus_thread').offset().top;
+  // var ds_loaded = false,
+  //     top = $('#disqus_thread').offset().top;
       //identifier = $('#post__title').data('identifier');
-  window.disqus_shortname = $('#disqus_thread').attr('name');
+  // window.disqus_shortname = $('#disqus_thread').attr('name');
   //window.disqus_shortname = 'coffeechou';
   //window.disqus_identifier = identifier;
 
-  function check() {
-    if ( !ds_loaded && container.scrollTop() + container.height() > top ) {
-      $.ajax({
-        type: 'GET',
-        url: 'https://' + disqus_shortname + '.disqus.com/embed.js',
-        dataType: 'script',
-        cache: true
-      });
-      ds_loaded = true;
-    } else {
-      DISQUS.reset({
-        reload: true,
-        config: function () {  
-          this.page.url = window.location.href;
-        }
-      });
-    }
-  }check();
-  container.scroll(check);
+  // function check() {
+  //   if ( !ds_loaded && container.scrollTop() + container.height() > top ) {
+  //     $.ajax({
+  //       type: 'GET',
+  //       url: 'https://' + disqus_shortname + '.disqus.com/embed.js',
+  //       dataType: 'script',
+  //       cache: true
+  //     });
+  //     ds_loaded = true;
+  //   }
+  // }check();
+  // container.scroll(check);
 }afterPjax();
 
-
+      
 
 
 
