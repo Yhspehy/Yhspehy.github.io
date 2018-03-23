@@ -40,15 +40,7 @@ if ($(window).width() <= 1280) {
 //  $('#js-label' + i).on('click', clickHandler(i));
 //}
 
-var reset = function (newIdentifier, newUrl) {
-  DISQUS.reset({
-    reload: true,
-    config: function () {
-      this.page.identifier = newIdentifier;
-      this.page.url = newUrl;
-    }
-  });
-};
+
 
 
 var clickHandler = function(id) {
@@ -71,8 +63,6 @@ $('#pl__container a').each(function(index) {
       sidebar.addClass('fullscreen');
       button.addClass('fullscreen');
     }
-    console.log(window.location)
-    reset(window.location.pathname, window.location.href)
   })
 })
 
