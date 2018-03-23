@@ -181,6 +181,13 @@ function afterPjax() {
         cache: true
       });
       ds_loaded = true;
+    } else {
+      DISQUS.reset({
+        reload: true,
+        config: function () {  
+          this.page.url = window.location.href;
+        }
+      });
     }
   }check();
   container.scroll(check);
