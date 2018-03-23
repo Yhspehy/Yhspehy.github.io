@@ -6,6 +6,16 @@ var disqus_url = 'http://yhspehy.github.io';
   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
   dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+  $('#pl__container a').each(function(index) {
+    $(this).click(function () {
+      console.log(window.location)
+      if ($('#disqus_thread')) {}
+        setTimeout(() => {
+          reset(window.location.pathname, window.location.href)
+        }, 1000)
+    })
+  })
 })();
 
 var reset = function (newIdentifier, newUrl) {
@@ -20,9 +30,4 @@ var reset = function (newIdentifier, newUrl) {
   });
 };
 
-$('#pl__container a').each(function(index) {
-  $(this).click(function () {
-    console.log(window.location)
-    reset(window.location.pathname, window.location.href)
-  })
-})
+
