@@ -6,9 +6,7 @@
 \*---------------------------------*/
 
 // Detect window size, if less than 1280px add class 'mobile' to sidebar therefore it will be auto hide when trigger the pjax request in small screen devices.
-if ($(window).width() <= 1280) {
-  $('#sidebar').addClass('mobile')
-}
+
 
 // Variables
 //    tag1       = $('.pl__all'),
@@ -19,6 +17,16 @@ var sidebar    = $('#sidebar'),
     container  = $('#post'),
     content    = $('#pjax'),
     button     = $('#icon-arrow');
+
+
+if ($(window).width() <= 1280) {
+  sidebar.addClass('fullscreen');
+  button.addClass('fullscreen');
+  content.delay(200).queue(function(){
+    $(this).addClass('fullscreen').dequeue();
+  });
+}
+
 
 // Tags switcher
 //var clickHandler = function(k) {
@@ -37,6 +45,9 @@ var clickHandler = function(id) {
                                                                   //$(this).addClass('active');
     $('.pl__all').hide();
     $('.' + id).delay(50).fadeIn(350);
+    if (sidebar.hasClass('mobile')) {
+      sidebar.addClass('fullscreen');
+    }
   }
 };
 
@@ -52,12 +63,12 @@ $('#tags__ul li').each(function(index){
 //  }
 //});
 
-$('.pl__all').on('click', function() {
-  $(this).addClass('active').siblings().removeClass('active');
-  if (sidebar.hasClass('mobile')) {
-    $('#sidebar, #pjax, #icon-arrow').addClass('fullscreen');
-  }
-});
+// $('.pl__all').on('click', function() {
+//   $(this).addClass('active').siblings().removeClass('active');
+//   if (sidebar.hasClass('mobile')) {
+//     $('#sidebar, #pjax, #icon-arrow').addClass('fullscreen');
+//   }
+// });
 
 // Enable fullscreen.
 $('#js-fullscreen').on('click', function() {
@@ -272,9 +283,9 @@ function afterPjax() {
     })
   }
   
-    setTimeout(function() {
-      b()
-    }, 100)
+  setTimeout(function() {
+    b()
+  }, 100)
 
 }();
 
