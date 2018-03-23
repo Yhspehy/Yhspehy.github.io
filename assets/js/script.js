@@ -39,6 +39,18 @@ if ($(window).width() <= 1280) {
 //for (var i = 1; i <= 4; i++) {
 //  $('#js-label' + i).on('click', clickHandler(i));
 //}
+
+var reset = function (newIdentifier, newUrl) {
+  DISQUS.reset({
+    reload: true,
+    config: function () {
+      this.page.identifier = newIdentifier;
+      this.page.url = newUrl;
+    }
+  });
+};
+
+
 var clickHandler = function(id) {
   return function() {
     $(this).addClass('active').siblings().removeClass('active');  //相当于$('#tags__ul li').removeClass('active');
@@ -47,6 +59,7 @@ var clickHandler = function(id) {
     $('.' + id).delay(50).fadeIn(350);
   }
 };
+
 
 $('#tags__ul li').each(function(index){
   $('#' + $(this).attr('id')).on('click', clickHandler($(this).attr('id')));
@@ -58,6 +71,8 @@ $('#pl__container a').each(function(index) {
       sidebar.addClass('fullscreen');
       button.addClass('fullscreen');
     }
+    console.log(window.location)
+    reset(window.location.pathname, window.location.href)
   })
 })
 
@@ -114,6 +129,8 @@ $(document).on({
     afterPjax();
   }
 });
+
+
 
 // Codepen embed js
 // http://codepen.io/assets/embed/ei.js
