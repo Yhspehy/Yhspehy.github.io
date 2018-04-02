@@ -7,7 +7,42 @@ keywords: css-magic
 
 记录一些关于css的一些奇妙的方法。
 
+### 连续的图像边框
 
+这个demo主要学习的是多个背景的添加以及border-image的设置。
+
+```css
+<style>
+  .bg-within-words {
+    width: 100px;
+    height: 100px;
+    padding: 20px;
+    border: 20px solid transparent;
+    background: linear-gradient(white, white), url(./bg.jpg);
+    background-size: cover;
+    background-clip: padding-box, border-box;   // 背景绘制的区域
+    background-origin: padding-box, border-box;    // 背景图片相对于某个边框来定位
+  }
+</style>
+```
+
+<style>
+  .bg-within-words {
+    width: 100px;
+    height: 100px;
+    padding: 20px;
+    border: 20px solid transparent;
+    background: linear-gradient(white, white), url(/public/tech/css-magic/bg-within-words.jpg);
+    background-size: cover;
+    background-clip: padding-box, border-box;
+    background-origin: border-box
+  }
+</style>
+
+<div class="bg-within-words">Hey！</div>
+
+顺便我还学习了border-image这个css属性，虽然以前用过它来写渐变的按钮背景，但是发现自己对它的相关属性还是不是很了解。主要是`border-image-slice`。有人说它和`background-clip`类似，但是我发现其实还是有很大出路的。因为`background-clip`是相对于左上角来写`top right bottom left`的距离，但是`border-image-slice`是相对于各个边来写距离。  
+`border-image-width`会覆盖`border-width`。
 
 ### 五边形左右底脚的圆弧
 
@@ -155,7 +190,7 @@ keywords: css-magic
         animation: panoramic 20s linear infinite;
         background: linear-gradient(-45deg, #D9CFBB  25%, #C3B393 0, #C3B393 50%,
             #D9CFBB 0, #D9CFBB 75%, #C3B393 0);
-        // 关于这里的#C3B393 0，表示终止渐变，<color-stop> = <color> [ <percentage> | <length> ]。这里的0代表的是0px,表示在25%的时候#C3B393颜色的长度为0，然后#C3B393 50%表示在从之前的位置到50%都是#C3B393，所以就相当于这25%到50%没有发生渐变。
+        // 关于这里的#C3B393 0，表示终止渐变，<color-stop> = <color> [ <percentage> | <length> ]。这里的0代表的是0px,表示在25%的时候#C3B393颜色的长度为0，当某个色标的位置值比整个列表中在它之前的色标的位置值都要笑，则该色标的位置值会被设置为它前面所有色标位置的最大值，所以他的长度为0，就相当于#C3B393 25%，然后#C3B393 50%表示在从之前的位置到50%都是#C3B393，所以就相当于这25%到50%没有发生渐变。
 
     }
 

@@ -19,8 +19,8 @@ keywords: transform
   }
 
   #container {
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
     margin: 100px auto;
     padding: 50px;
     perspective: 30px;
@@ -57,10 +57,10 @@ keywords: transform
     // 计算鼠标与元素中点的距离
     function update (xPos, yPos) {
       // 获取元素中点相对于浏览器左上角的位置
-      var wc = container.getBoundingClientRect().left + 200,
-          hc = container.getBoundingClientRect().top + 200;
-      inner.style.setProperty('--mouseX', -(xPos - wc) / 100 + 'deg');
-      inner.style.setProperty('--mouseY', (yPos - hc) / 100 + 'deg');
+      var wc = container.getBoundingClientRect().left + 150,
+          hc = container.getBoundingClientRect().top + 150;
+      inner.style.setProperty('--mouseX', -(xPos - wc) / 50 + 'deg');
+      inner.style.setProperty('--mouseY', (yPos - hc) / 50 + 'deg');
     }
 
     function enter (event) {
@@ -105,8 +105,8 @@ keywords: transform
 
 
   #container {
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
     margin: 100px auto;
     padding: 50px;
     perspective: 30px;
@@ -143,10 +143,10 @@ keywords: transform
     }
 
     function update (xPos, yPos) {
-      var wc = container.getBoundingClientRect().left + 200,
-          hc = container.getBoundingClientRect().top + 200;
-      inner.style.setProperty('--mouseX', -(xPos - wc) / 100 + 'deg');
-      inner.style.setProperty('--mouseY', (yPos - hc) / 100 + 'deg');
+      var wc = container.getBoundingClientRect().left + 150,
+          hc = container.getBoundingClientRect().top + 150;
+      inner.style.setProperty('--mouseX', -(xPos - wc) / 50 + 'deg');
+      inner.style.setProperty('--mouseY', (yPos - hc) / 50 + 'deg');
     }
 
     function enter (event) {
