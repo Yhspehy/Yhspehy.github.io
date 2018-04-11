@@ -521,7 +521,141 @@ keywords: css-magic
 
 <div class="shade">You can see me!</div>
 
+### 毛玻璃效果
 
+```
+<style>
+  .blur-bg {
+    margin: 0 auto;
+    overflow: hidden;
+    width: 480px;
+    height: 320px;
+  }
+  .blur-bg, .blur-img::before {
+    background: url(/public/tech/css-magic/blur-img.jpg);
+  }
+
+  .blur-img {
+    position: relative;
+    overflow: hidden;
+    width: 300px;
+    height: 200px;
+    margin: 60px 90px;
+    color: black;
+    z-index: 1;
+    text-align: center;
+    line-height: 200px;
+  }
+
+  .blur-img::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; left: 0; bottom: 0;
+    filter: blur(5px);
+    margin: -30px;
+    border-radius: 3px;
+    z-index: -1;
+    background-position: -60px -30px;
+    background-repeat: no-repeat;
+  }
+</style>
+```
+
+<style>
+  .blur-bg {
+    margin: 0 auto;
+    overflow: hidden;
+    width: 480px;
+    height: 320px;
+  }
+  .blur-bg, .blur-img::before {
+    background: url(/public/tech/css-magic/blur-img.jpg);
+  }
+
+  .blur-img {
+    position: relative;
+    overflow: hidden;
+    width: 300px;
+    height: 200px;
+    margin: 60px 90px;
+    color: black;
+    z-index: 1;
+    text-align: center;
+    line-height: 200px;
+  }
+
+  .blur-img::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; left: 0; bottom: 0;
+    filter: blur(10px);
+    margin: -30px;
+    border-radius: 3px;
+    z-index: -1;
+    background-position: -60px -30px;
+    background-repeat: no-repeat;
+  }
+</style>
+
+<div class="blur-bg">
+  <div class="blur-img">You can see me!</div>
+</div>
+
+### 折角效果
+
+这里需要一点逆向思维
+
+```css
+<style>
+  @mixin folded-corner($background, $size, $angle:30deg) {
+    position: relative;
+    background: $background;
+    background: linear-gradient($angle - 180deg, transparent $size, $background 0);
+    border-radius: 0.5em;
+
+    $x: $size / sin($angle);
+    $y: $size / cos($angle);
+
+    $::before {
+      content: '';
+      position: relative;
+      top: 0; right: 0;
+      background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,.2) 0, rgba(0,0,0,.4)), 100% 0 no-repeat;
+      width: $y; height: $x;
+      transform: translateY($y - $x) rotate(2*$angle - 90deg);
+      transform-origin: bottom right;
+      border-bottom-left-radius: inherit;
+      box-shadow: -.2em .2em .3em. -.1em rgba(0,0,0,.2);
+    }
+  }
+</style>
+```
+
+<style>
+  .folded-corner {
+    width: 300px;
+    margin: 0 auto;
+    height: 200px;
+    position: relative;
+    background: #58a;
+    background: linear-gradient(
+      -150deg, transparent 1.5em, #58a 0);
+    border-radius: 0.5em;
+  }
+  .folded-corner::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,0.2) 0, rgba(0,0,0,0.4)) 100% 0 no-repeat;
+    width: 1.73em; height: 3em;
+    transform: translateY(-1.3em) rotate(-30deg);
+    transform-origin: bottom right;
+    border-bottom-left-radius: inherit;
+    box-shadow: -0.2em 0.2em 0.3em -0.1em rgba(0,0,0,0.1);
+  }
+</style>
+
+<div class="folded-corner">You can see me!</div>
 
 ## 结构与布局
 
