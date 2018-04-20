@@ -657,7 +657,181 @@ keywords: css-magic
 
 <div class="folded-corner">You can see me!</div>
 
+
+
+
+## 字体排印
+
+### 连字符断行
+
+使用的css3的hyphens属性
+
+### 插入换行
+
+Unicode字符中一个字符时专门代表换行的：0x000A。在css中，这个字符可以写作"\000A"，或简化成"\A"，他可以写在::before和::after的content中来达到换行的效果。
+
+但是html代码中换行符会与相邻的其他空白符进行合并，如果我希望保留代码中的空白符和换行，可以使用`white-space:pre`属性。
+
+### 文本的斑马条纹
+
+使用的css3渐变函数，控制background-size和line-height，使文本居中。
+
+### 调整tab的宽度
+
+使用tab-size属性。
+
+### 连字
+
+使用font-variant-ligatrues属性。
+
+### 华丽的&符号
+
+在自定义的font-family中设置unicode-range指定&字符。
+
+```css
+    @font-face: {
+      font-family: Ampersand;
+      src: local(......),
+           local(.....),
+      unicode-range: U+26;
+    }
+
+    h1 {
+      font-family: Ampersand, Helvetica;
+    }
+```
+
+### 自定义下划线
+
+可以使用渐变达到虚线下划线效果。
+
+```css
+  background: line-gradient(90deg, gray 66%, transparent 0) repeat-x;
+  background-size: .2em 2px;
+  background-position: 0 1em;
+```
+
+### 现实中的文字效果
+
+使用text-shadow可以加粗文字。
+
+#### 使用svg的stroke可以产生空心字效果。
+
+```css
+  .hollow-word {
+    font: 500%/1 Rockwell, serif;
+    background: deeppink;
+    color: white;
+  }
+  .hollow-word text {
+    fill: currentColor;
+  }
+  .hollow-word svg {
+    overflow: visible;
+  }
+  .hollow-word use {
+    stroke: black;
+    stroke-width: 6;
+    stroke-linejoin: round;
+  }
+```
+
+
+<style>
+  .hollow-word {
+    font: 500%/1 Rockwell, serif;
+    background: deeppink;
+    color: white;
+  }
+  .hollow-word text {
+    fill: currentColor;
+  }
+  .hollow-word svg {
+    overflow: visible;
+  }
+  .hollow-word use {
+    stroke: black;
+    stroke-width: 6;
+    stroke-linejoin: round;
+  }
+</style>
+
+<div class="hollow-word">
+  <svg width="2em" height="1.2em">
+    <use xlink:href="#css" />
+    <text y="1em">CSS</text>  
+  </svg>
+</div>
+
+
+#### 文字外的发光效果
+
+```css
+  .shine-word {
+    background: #203;
+    font-size: 3em;
+    color: #ffc;
+    text-shadow: 0 0 .1em, 0 0 .3em;
+  }
+```
+
+<style>
+  .shine-word {
+    background: #203;
+    font-size: 3em;
+    color: #ffc;
+    text-shadow: 0 0 .1em, 0 0 .3em;
+  }
+</style>
+<div class="shine-word">Glow</div>
+
+#### 文字突起效果
+
+```css
+  .break-out-word {
+    background: #58a;
+    font-size: 3em;
+    color: white;
+    text-shadow:  0 1px hsl(0,0%,85%),
+                  0 1px hsl(0,0%,80%),
+                  0 1px hsl(0,0%,75%),
+                  0 1px hsl(0,0%,70%),
+                  0 1px hsl(0,0%,65%),
+                  0 5px 10px black;
+  }
+```
+
+<style>
+  .break-out-word {
+    background: #58a;
+    font-size: 3em;
+    color: white;
+    text-shadow:  0 1px hsl(0,0%,85%),
+                  0 1px hsl(0,0%,80%),
+                  0 1px hsl(0,0%,75%),
+                  0 1px hsl(0,0%,70%),
+                  0 1px hsl(0,0%,65%),
+                  0 5px 10px black;
+  }
+</style>
+<div class="break-out-word">Glow</div>
+
+修改text-shadow中的颜色也可以修改阴影的颜色。
+
+
 ## 结构与布局
+
+### 自适应内部元素
+
+如果一个div需要自适应内部图片的宽度，并且文字的宽度不大于图片的宽度，可以使用`max-width:min-content`属性。
+
+`min-content`这个属性将解析为这个容器内部最大的不可断行元素的卡U难度（即最宽的单词、图片或具有固定宽度的盒元素）。
+
+
+### 精确控制表格列宽
+
+之前控制表格列宽的时候都是内部添加div来实现的。现在可以通过`table-layout:fixed`来实现。
+
 
 ### 绝对底部
 
@@ -804,6 +978,33 @@ keywords: css-magic
 </div>
 
 
+### 状态平滑的动画
+
+如果有一张非常长的图片，但是我们只能提供一个较小的div来展示他，那我们可以给这个图片上添加动画，当我们鼠标放上去的，他自动从左往右展示。但是这会出现一个问题，当我们的鼠标从这张图片移开的时候，图片会瞬间回到最左端。要改善这个情况，我们可以让这个动画自动执行，只不过一开始是出于停止的状态，当我们的鼠标放上去的时候，动画开始执行，鼠标移开，动画停止。
+
+```css
+  @keyframes panoramic{
+    to {
+      background-position: 100% 0;
+    }
+  }
+  .animation {
+    width: 100px;
+    height: 100px;
+    background: url();
+    background-size: auto 100%;
+    animation: panoramic 10s linear infinite alternate;
+    animation-play-state: paused;
+  }
+  .animation:hover, .animation:focus {
+    animation-play-state: running;
+  }
+```
+
+
+
+
+
 ### 抖动效果
 
 抖动效果主要还是依靠animation完成，只不过需要比较多的状态。
@@ -862,6 +1063,95 @@ keywords: css-magic
 <div class='shake-div'>You can see me!</div>
 
 
+
+### 沿环形路径平移的动画
+
+这是作者给的代码，并不是最终版，可以优化。
+
+<style>
+  .circle-animation {
+    width: 300px;
+    height: 300px;
+    margin: 40px auto;
+    position: relative;
+    background: yellow;
+    border-radius: 50%;
+    border: 1px solid #b4a078;
+  }
+
+  .avatar {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: 125px;
+    border-radius: 50%;
+    animation: circular-smooth-spin 7.5s infinite linear;
+  }
+
+  @keyframes circular-smooth-spin {
+    from {
+      transform: translateY(150px) rotate(0turn) translateY(-150px) translateY(50%) rotate(1turn) translateY(-50%);
+    }
+    to {
+      transform: translateY(150px) rotate(1turn) translateY(-150px) translateY(50%) rotate(0turn) translateY(-50%);
+    }
+  }
+</style>
+
+<div class='circle-animation'>
+  <img src="/public/tech/css-magic/bg-within-words.jpg" class="avatar">
+</div>
+
+
+emm,这个特效的实现我真的学到了很多，虽然超级绕脑子，而且现在我再记录这些的东西的时候，我脑子还是一堆浆糊，不过我还是先写下来，以后慢慢消化。
+
+首先最重要的一个知识点是，`transform-origin只是一个语法糖，每个transform-origin都是可以被两个translate()模拟出来`。
+
+```css
+代码一：
+transform: rotate(30deg);
+transform-origin: 300px 300px;
+
+代码二：
+transform:  translate(300px, 300px);
+            rotate(30deg);
+            translate(-300px, -300px);
+transform-origin: 0 0;
+
+这两段代码渲染的结果是一样的。但是注意，在代码二中是明确设置了transform-origin的。
+```
+
+如果你理解了上面那一句话，再来看下面的内容。
+
+虽然可以通过两个translate()模拟出transform-origin的效果，但是在没有设置transform-origin的情况下，他的transform-origin还是在中心，所以在作者给出的代码中，他是没有设置transform-origin，所以其实他所围绕旋转的点其实并不是这个圆的圆心，而是这个圆的圆心再往右50%，往下50%的位置。  
+所以如果没有后面对圆做translate(50%, 50%)等相关处理的话（可以形象的理解成补足由于旋转点在中心的问题），这个结果会和现在的表现的不一样。`这是这里最最最搞脑子的地方！！！！`
+
+为了简单的理解，我们可以先想想作者给出的代码中我们可以怎么样优化。
+
+相信不少人可以想到，既然transform-origin默认为中心，那么如果我直接将圆移动到大圆的正中心呢？
+
+那么我就不需要一开始操作的`translateY（150px)`, 而且也不需要后面`translateY(50%)和translateY(-50%)`。  
+所以最终代码就是:
+```css
+  from {
+      transform: rotate(0turn) translateY(-125px) rotate(1turn);
+    }
+    to {
+      transform:  rotate(1turn) translateY(-125px) rotate(0turn);
+    }
+```
+
+这是为什么呢？
+
+我们可以想，一开始圆就在中心，然后顺时针旋转，旋转完移动圆的边缘，然后逆时针旋转相同的角度，这不就是我们要的效果了吗。
+
+那么原来的代码怎么理解呢？首先圆在圆点正上方的顶点，然后往下移动150px，刚好上边的中心点在圆心的地方，然后顺时针旋转，注意注意这里的旋转点是圆心正下方25px处，旋转完了上移150px回到原来的地方，然后往下移动25px，逆时针旋转，再上移25px。这里后面的上移和下移是必须的，如果没有的话，那么这个动画所围绕的点其实是圆心下方25px处，但是经过后面的下移逆时针旋转上移后，他其实是抵消了这25px的顺时针旋转所带来的位移。  
+或者这么理解，点a按照点b顺时针旋转一定角度，然后再按照点c逆时针旋转，最后的旋转的点其实就是在点a下面（点b-点c的y轴距离，即150px-25px = 125px）。
+
+所以这里原书中代码有错误！！（不信你们可以是看看）
+
+说句实话，虽然我了解这些代码的意思，但是我需要重头梳理，如果直接让我看最后的代码，我还是会迷糊一段时间，所以现在我还是不能很好的阐述，以后理解的更透彻了再来阐述。
 
 
 
