@@ -68,6 +68,54 @@ Object
 也许看到这里我们头会有点晕，这也是可以理解的，毕竟我们不能直接在实例的属性上查看构造函数是什么，但是我们可以通过_proto_的constructor查看他的构造函数。
 
 
+----------------------
+### Object.create()
+
+Object.create()的实现方式
+
+```js
+Object.create =  function (o) {
+    var F = function () {};
+    F.prototype = o;
+    return new F();
+}
+```
+
+这里可以看出他和new创建对象的区别。
+
+new创建的对象，对象的原型指向构造函数的原型对象。
+
+但是Object.create()创建的对象，他的原型指向传入的函数或者对象。
+
+比如：
+```
+var Base = function () {
+    this.a = 2
+}
+
+Base.b = 3
+
+Base.prototype.c = 4
+
+var a = Object.create(Base);
+
+在这里a的原型就是Base构造函数，而不是Base的原型，所以
+
+a.a   // undefined
+a.b   // 3
+a.c   // undefined
+
+var b = new Base()    // 这里b的原型就是Base的原型对象，而且还会执行Base中的语句并将this指向b。
+
+b.a   // 2
+b.b   // undefined
+b.c   // 4
+```
+
+js中继承的是原型`_proto_`，而不是prototype，千万要注意！！！
+
+
+
 
 ## 总结
 
