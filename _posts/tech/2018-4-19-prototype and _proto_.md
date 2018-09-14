@@ -60,11 +60,26 @@ Object
 
 `f Object()的`prototype 是 Object，毫无疑问,但是为什么他的*proto*变成 f()了呢？
 
-首先`f Object()`的构造函数应该`f Function()`,而`f Function()`的原型对象就是`Function.prototype`，也就是这里的`f()`,在 chrome 中他统一删除了`.prototype`。
+首先`f Object()`的构造函数应该`f Function()`,而`f Function()`的原型对象就是`(f Function).prototype`，也就是这里的`f()`,在 chrome 中他统一删除了`.prototype`。
+就像`(f Object()).prototype`显示为Object。
 
 查看`f()`的属性我们就可以看到，他的 constructor 果然是`f Function()`，而他的原型对象则是 Object。这是因为函数本质也是对象，所以`Function.prototype`的原型对象是`Object.prototype`是理所当然的啦。
 
 也许看到这里我们头会有点晕，这也是可以理解的，毕竟我们不能直接在实例的属性上查看构造函数是什么，但是我们可以通过*proto*的 constructor 查看他的构造函数。
+
+---
+
+
+### 一切皆对象
+
+js里一切皆对象，谈谈这句话的理解？
+
+虽然`'a'.length`为1，但是js明确指出了js的几种基本数据类型，其中复杂数据类型为object。
+
+虽然浏览器`console.dir('a')`不会展示它的原型，但是`a.__proto__`还是可以看到的，但是也千万不要被它迷惑了。浏览器故意将它隐藏也正是这个原因。
+
+虽然我们平常`var a = 'a'`经过了String的包装，但是a依然不是对象，他就是String。就比如，你穿女装但是不代表你是妹子！！！
+
 
 ---
 
