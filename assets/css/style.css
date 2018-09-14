@@ -1059,7 +1059,7 @@ pre > code {
 
 /* Generic */
 .highlight .k {
-  color: #859900; }
+  color: #ec5f65; }
 
 /* Keyword */
 .highlight .l {
@@ -1209,7 +1209,7 @@ pre > code {
 
 /* Name.Function */
 .highlight .nl {
-  color: #93a1a1; }
+  color: #c594c5; }
 
 /* Name.Label */
 .highlight .nn {
@@ -1217,7 +1217,7 @@ pre > code {
 
 /* Name.Namespace */
 .highlight .nx {
-  color: #555555; }
+  color: #f99156; }
 
 /* Name.Other */
 .highlight .py {

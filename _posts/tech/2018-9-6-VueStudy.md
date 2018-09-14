@@ -54,7 +54,7 @@ Vue.extend的组件的Super就是Vue。VueExtendComponent.extend的组件的Supe
 
 # Vue.prototype._init
 
-## initState
+## initState以及Observe
 
 在initData中，判断data中所有的字段是否符合规则，最后用observe(data)来创建监听对象。
 
@@ -62,6 +62,7 @@ Vue.extend的组件的Super就是Vue。VueExtendComponent.extend的组件的Supe
 2. 接着它会判断value是数组还是对象，如果是数组，则判断能否使用对象的__proto__属性，如果能用就直接将原型上数组的方法赋给value的原型，否则将原型上数组的方法依次object.defineProperty到value上。然后执行observeArray，遍历数组的元素并observe(元素)(返回第一步)。
 3. 如果是对象，则遍历属性并执行defineReactive。这一步就是响应式监听比较关键第一步，即将所有的属性设置get，set函数，当有节点访问这个参数的时候并自动将dep绑定到当前的watcher上，并且判断watcher上是否有该dep，没有则将dep添加到当前watcher的deps中。当属性值改变时，出发dep.notify(),一次调用subs中watcher的update()。
 4. 
+
 ```js
 get: function reactiveGetter () {
     const value = getter ? getter.call(obj) : val
@@ -80,8 +81,10 @@ get: function reactiveGetter () {
 }
 
 ```
+
 如果你能理解上述代码中注释开始到结束的代码就说明你已经差不多理解了Vue中很关键的响应式原理。我们都知道我们直接添加删除对象属性，或者设置数组元素是不能响应式的，其原因就是Vue并没有收到该对象或者数组修改的情况反馈。  
 我们现在知道dep.depend()在对象自身dep上，但是有个问题，如果对象下的某个属性也是对象了，并且那个属性对象新增了属性，那我该怎么监听呢？
+
 
 ```js
 data: {
@@ -135,4 +138,18 @@ data: {
 4. 执行vm._update(vm._render(), hydrating)
 5. vm._render 函数的作用是调用 vm.$options.render 函数并返回生成的虚拟节点(vnode)
 6. vm._update 函数的作用是把 vm._render 函数生成的虚拟节点渲染成真正的 DOM
+
+
+## Watcher
+
+在数据发生变化的时候该如何更新呢？
+1. 首先修改的数据会依次执行数据所依赖的dep.sub中watcher的update()
+2. 在watcher的update中，会根据computed，sync，和其他情况分成三类，其中第三类是会执行queueWatcher()
+3. queueWatcher会筛选watcher(重复的watcher不会被再次推入queue，因为最后执行flushSchedulerQueue的时候，会获取watcher最后的数据value)，并且将watcher推入queue中，并在第一次获取到watcher的时候执行nextTick(flushSchedulerQueue)，这个函数是用来一次性处理所有queue中的watcher，并按照watcherId从小到达排序，因为组件的watch是先与renderWatcher的，所以可以将所有watcher的数据修改完成后一次性调用render渲染函数，不需要数据修改一次就调用一次render函数，提高了性能。
+4. 在nextTick(flushSchedulerQueue)后，nextTick里的callback就生成了一个micortask队列，在调用栈清空后就会执行microtask里的任务。
+
+
+> 我认为Vue中最美的实现便是这里，在所有的数据上添加依赖数组，修改则告知所有的wahcter，然后在一个macrotask中将所有的要执行的watcher添加进一个数组并在microtask中一次执行，最后直接renderwatcher，在microtask执行完后浏览器UI进行渲染。真的简直完美！
+
+
 
