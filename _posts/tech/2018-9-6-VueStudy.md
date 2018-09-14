@@ -15,17 +15,19 @@ keywords: Vue
 2. 然后在core/index.js中引入并加工extend各种globalApi。
 3. 接着在web或者weex平台下，不同的entry下引入core/index.js，并根据不同的平台定义不同的$mount方法以及部分platform specific utils。
 4. 在使用的时候调用new Vue()的时候调用的就是instance/index.js中的init方法。
-5. vue组件产生是通过vue.extend的，和new Vue的区别就是，vue组件产生的时候mergeOptions是不带vm的。
 
 
 
 
 # 组件
 
-因为vue组件是通过Vue.extend生成的，然后调用new component().$mount()挂载。
+因为vue组件是通过Vue.extend生成的，然后调用new component().$mount()挂载。其中new component()中使用initInternalComponent来初始化组件。
+
+和new Vue的区别就是，vue组件产生的时候mergeOptions是不带vm的。
 
 在Vue.extend中，会返回一个VueComponent构造函数，他会执行mergeOptions, 他的prototype是Super的prototype，即父类的prototype。可以在构造函数的super上访问到该父类。
 Vue.extend的组件的Super就是Vue。VueExtendComponent.extend的组件的Super就是VueExtendComponent。
+
 
 
 
@@ -60,8 +62,9 @@ Vue.extend的组件的Super就是Vue。VueExtendComponent.extend的组件的Supe
 
 1. observe首先会判断value是否为数组或者对象，并且不是虚拟dom，否则直接return。接着查询value自身是否有__ob__属性，没有则创建一个，并new Observe对象赋值给__ob__。
 2. 接着它会判断value是数组还是对象，如果是数组，则判断能否使用对象的__proto__属性，如果能用就直接将原型上数组的方法赋给value的原型，否则将原型上数组的方法依次object.defineProperty到value上。然后执行observeArray，遍历数组的元素并observe(元素)(返回第一步)。
-3. 如果是对象，则遍历属性并执行defineReactive。这一步就是响应式监听比较关键第一步，即将所有的属性设置get，set函数，当有节点访问这个参数的时候并自动将dep绑定到当前的watcher上，并且判断watcher上是否有该dep，没有则将dep添加到当前watcher的deps中。当属性值改变时，出发dep.notify(),一次调用subs中watcher的update()。
-4. 
+3. 如果是对象，则遍历属性并执行defineReactive。这一步就是响应式监听比较关键第一步，即将所有的属性设置get，set函数，当有节点访问这个参数并且存在dep.target的时候并自动将dep绑定到当前的watcher上，如果watcher上已有该dep则会跳过。当属性值改变时，出发dep.notify(),一次调用subs中watcher的update()。
+4. 如果该属性值是数组或者对象的话则看下面。
+5. 
 
 ```js
 get: function reactiveGetter () {
@@ -140,7 +143,13 @@ data: {
 6. vm._update 函数的作用是把 vm._render 函数生成的虚拟节点渲染成真正的 DOM
 
 
-## Watcher
+## initWatch和$watcher,Watcher
+
+在watcher的get中，他会pushTarget(this)，意味着初始化watcher或者每次update()时候,Dep.target就是当前的watcher，所以只要你取值，就会执行dep.depend()来添加依赖。  
+所以每次watch data上的数据的时候，因为初始化便会获取data里的值，所以在init watch的时候便会将data的属性值的dep绑定到当前的watcher上。
+
+而模版中的数据则会在renderWatcher中被绑定。
+
 
 在数据发生变化的时候该如何更新呢？
 1. 首先修改的数据会依次执行数据所依赖的dep.sub中watcher的update()
@@ -149,7 +158,39 @@ data: {
 4. 在nextTick(flushSchedulerQueue)后，nextTick里的callback就生成了一个micortask队列，在调用栈清空后就会执行microtask里的任务。
 
 
-> 我认为Vue中最美的实现便是这里，在所有的数据上添加依赖数组，修改则告知所有的wahcter，然后在一个macrotask中将所有的要执行的watcher添加进一个数组并在microtask中一次执行，最后直接renderwatcher，在microtask执行完后浏览器UI进行渲染。真的简直完美！
+> 我认为Vue中最美的实现便是这里，在所有的数据上添加依赖数组，修改则告知所有的wahcter，然后在一个macrotask中将所有的要执行的watcher添加进一个数组并在microtask中一次执行，最后执行renderwatcher，再microtask执行完后浏览器UI进行渲染。真的简直完美！
+
+
+
+
+## initProps
+
+在initProps中的toggleObserving的理解：因为props传递给子组件的是父组件的值，所以如果传递的是一个数组或者对象，则这个值本身就是响应式数据，并且它的__ob__包含了父组件和子组件的renderWatcher。而具体所应用的属性的dep则包含真正应用这个数据的renderWatcher，因为当子组件的renderWatcher执行的时候，会调用相应props对象的属性值，并且将子组件的renderWatcher添加到subs里。所以这里不需要重复observe childOb。而defineReactive本身是因为当本身值改变的时候可以触发子组件的rederWatcher。比如`w:{a: 1}`上要添加属性c的时候，如果没有子组件的将renderWatcher添加进w.__ob__的dep.subs就不会触发更新了。
+
+理解对象的__ob__和每个属性独自的dep很重要！！！
+
+比如：
+```js
+// 父组件
+<ax :w="w"></ax>
+
+data => {
+    w : {a: 1}
+}
+
+// 子组件
+<div>{{w}}</div>
+
+props: ['w']
+
+// 最终w的__ob__
+w: {
+    __ob__: ...  // dep.subs里包含了父组件和子组件的renderWatcher
+    a: 1    // a元素单独的dep.subs里包含了子组件的renderWatcher，只包含应用a属性的组件renderWatcher
+}
+```
+
+
 
 
 
