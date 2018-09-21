@@ -96,10 +96,10 @@ data: {
     }
 }
 ```
-如果直接data.a.b = 2，那么vue可以直接相应，因为我们给data.a.b的dep上添加了watcher。
+如果直接data.a.b = 2，那么vue可以直接响应，因为我们给data.a.b的dep上添加了watcher。
 但是如果此时data.a.c = 1， 修改是data.a，但是我们并没有给data.a添加任何watcher，所以我们监听不了。
 
-但是我们只需要childOb.dep.depend()就可以将对象下的__ob__添加watcher。只要该对象改变，则会通知watcher。
+但是我们只需要childOb.dep.depend()就可以将对象下的__ob__添加watcher。只要该对象改变，则会通知绑定在在data.a上的watcher。
 
 ```js
 if (Array.isArray(value)) {
@@ -165,14 +165,20 @@ data: {
 
 ## initProps
 
-在initProps中的toggleObserving的理解：因为props传递给子组件的是父组件的值，所以如果传递的是一个数组或者对象，则这个值本身就是响应式数据，并且它的__ob__包含了父组件和子组件的renderWatcher。而具体所应用的属性的dep则包含真正应用这个数据的renderWatcher，因为当子组件的renderWatcher执行的时候，会调用相应props对象的属性值，并且将子组件的renderWatcher添加到subs里。所以这里不需要重复observe childOb。而defineReactive本身是因为当本身值改变的时候可以触发子组件的rederWatcher。比如`w:{a: 1}`上要添加属性c的时候，如果没有子组件的将renderWatcher添加进w.__ob__的dep.subs就不会触发更新了。
+在initProps中的toggleObserving的理解：因为props传递给子组件的是父组件的值，所以如果传递的是一个数组或者对象，则这个值本身就是响应式数据，并且它的__ob__包含了父组件的renderWatcher。而具体所应用的属性的dep则包含真正应用这个数据的renderWatcher，因为当子组件的renderWatcher执行的时候，会调用相应props对象的属性值，并且将子组件的renderWatcher添加到subs里。  
+所以这里不需要重复observe childOb。而defineReactive本身是因为可以将当前的renderWatcher添加到它的__ob__中，所以这个时候props[key].__ob__的subs就包含了子组件和父组件的renderWatcher。当本身值改变的时候可以触发子组件的rederWatcher。比如`w:{a: 1}`上要添加属性c的时候，如果没有子组件的将renderWatcher添加进w.__ob__的dep.subs就不会触发更新了。
+
+
+可以试试将initProps中defineReactive注释掉，改成`props[key] = value`。你就会发现他不会自定更新了，因为没有触发子组件的renderWatcher。
+
 
 理解对象的__ob__和每个属性独自的dep很重要！！！
+
 
 比如：
 ```js
 // 父组件
-<ax :w="w"></ax>
+<child :w="w"></child>
 
 data => {
     w : {a: 1}
@@ -185,7 +191,7 @@ props: ['w']
 
 // 最终w的__ob__
 w: {
-    __ob__: ...  // dep.subs里包含了父组件和子组件的renderWatcher
+    __ob__: ...  // dep.subs里包含了父组件和子组件的renderWatcher，子组件的renderWatcher在initProps中defineReactive的时候添加。
     a: 1    // a元素单独的dep.subs里包含了子组件的renderWatcher，只包含应用a属性的组件renderWatcher
 }
 ```
