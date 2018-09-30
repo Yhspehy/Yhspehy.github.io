@@ -81,7 +81,7 @@ function watchTouchEnd(e) {
 
 现在让我们来看看浏览器里实现上述操作的时候会发现啥。
 
-1. 假设我们使用的是fixed固定底端的input。
+### 假设我们使用的是fixed固定底端的input。
 
 首先出现的是input被遮挡问题，在每次切换safari chrome后第一次唤起会出现这个问题，之后都不会。  
 其次每次唤起键盘页面都会上移，并且键盘去掉的时候页面不会上移回到之前的位置。
@@ -121,7 +121,7 @@ function watchTouchEnd(e) {
 这个方案也有个问题，那就是在safari下，input和键盘之间会有一段空隙，这段空隙就是safari toolbar的高度。如果打包成app后应该是没有这个问题了，但是web调试的时候看起来很别扭。
 
 
-2. 使用flex布局将input置于顶部。
+### 使用flex布局将input置于底部。
 
 同样会出现input遮挡问题，页面会上移，但是键盘去掉后会下移回到之前的位置。  
 中间内容块的滚动卡顿。
@@ -136,5 +136,5 @@ function watchTouchEnd(e) {
 最后我推荐使用第二种方法，因为我感觉兼容性比较好，而且使用fixed固定body后在ios下也不会出现键盘和input的空隙。  
 但是第二种方法我发现会出现滚动穿透的问题。原生的scroll是真的坑啊，这个穿透简直了！！！！
 
-最后我用better-scroll来代替了原生的scroll，就没有穿透了。
+最后我用better-scroll来代替了原生的scroll，就没有滚动穿透了。
 
