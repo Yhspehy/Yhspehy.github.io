@@ -131,7 +131,7 @@ function watchTouchEnd(e) {
 
 但是如果你使用settimeout，但是会出现键盘和input之间有空隙，不过你可以通过之前fixed固定body的方法来消除。
 
-虽然在iphone6s会出现这些问题，但是我今天欢乐iphonexs后，这些问题都复现不了了！！
+虽然在iphone6s会出现这些问题，但是我今天换了iphonexs后，这些问题都复现不了了！！
 
 最后我推荐使用第二种方法，因为我感觉兼容性比较好，而且使用fixed固定body后在ios下也不会出现键盘和input的空隙。  
 但是第二种方法我发现会出现滚动穿透的问题。原生的scroll是真的坑啊，这个穿透简直了！！！！
