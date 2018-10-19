@@ -37,8 +37,12 @@ keywords: Eros
 如果不实用导航栏，那么在iphonex中发现页面会占据刘海的区。
 解决方式：使用全局属性的statusBarHeight，这个可以在官方的demo中看到他的使用方法。
 
+使用导航栏的时候，statusBarHeight的值为0，所以如果这个时候你隐藏了导航栏，那么页面就到刘海区了。
 
+## 热更新
 
-## 请求时出现的问题
+今天重启了一下电脑，然后发现eros热更新连不上了。。。明明在一个局域网里，但是就是连不上。
 
-在请求接口的时候发现总是请求失败，返回a server with the specified hostname could not be found。emm，暂时不知道如何去解决，根本上是苹果自己的问题，我们dns过期了导致的。
+可以在`eros.native.js`中设置socketServer和jsServer。
+
+[链接](https://bmfe.github.io/eros-docs//#/zh-cn/QA?id=q-%E7%83%AD%E5%88%B7%E6%96%B0%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8%EF%BC%88%E6%89%8B%E5%8A%A8%E6%8C%87%E5%AE%9A%E6%9C%8D%E5%8A%A1%E5%9C%B0%E5%9D%80%EF%BC%89)

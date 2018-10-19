@@ -19,6 +19,8 @@ keywords: Weex
 
 如果要动态绑定样式，可以通过切换class来实现
 
+`:class="[exp?'class1': 'class2']"`
+
 
 ### refresh样式
 
@@ -46,6 +48,8 @@ refresh在ios测试时，如果下拉的距离超过了viewHeight，那么会执
 ---
 
 ## scroller, list， recycle-list
+
+使用scroller的时候一定要设置相对应的宽度或者高度。
 
 scroller和list不能相互嵌套相同方向的list和scroller，切记！
 
