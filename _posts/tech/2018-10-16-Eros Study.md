@@ -50,6 +50,11 @@ keywords: Eros
 [链接](https://bmfe.github.io/eros-docs//#/zh-cn/QA?id=q-%E7%83%AD%E5%88%B7%E6%96%B0%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8%EF%BC%88%E6%89%8B%E5%8A%A8%E6%8C%87%E5%AE%9A%E6%9C%8D%E5%8A%A1%E5%9C%B0%E5%9D%80%EF%BC%89)
 
 
+## tool
+
+copyString只能复制string，复制其他类型的数据。
+
+
 
 ## 使用iconfont
 
@@ -74,3 +79,4 @@ keywords: Eros
 
 
 注意：官方文档中路径都是写localhost的，但是其实手机上访问localhost是访问不到电脑上的数据的，所以这里要改成电脑的ip。而且eros-publish中的app/check是get请求，不是post，官方文档有错误！
+
