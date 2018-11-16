@@ -22,6 +22,11 @@ keywords: Eros
 由于使用的是xcode10，在编译中还发现一个问题。项目中依赖了lstdc++.6.0.9。但是xcode10中已经remove了这个。[解决办法](https://www.jianshu.com/p/6d94278d62b3),由于我只缺少lstdc++.6.0.9，所以我就往4个文件夹中添加了6.0.9的文件，另外几个没有添加。
 
 
+## Eslint
+
+Eros内置脚手架中，eslint配置不全，导致在编辑器中不生效，建议使用weex的package.json中eslint相关的包来替换eros自带的。
+
+
 ## topBar
 
 我在使用这个时候发现重新eros dev之后重新打开app并没有用。
@@ -38,6 +43,11 @@ keywords: Eros
 解决方式：使用全局属性的statusBarHeight，这个可以在官方的demo中看到他的使用方法。
 
 使用导航栏的时候，statusBarHeight的值为0，所以如果这个时候你隐藏了导航栏，那么页面就到刘海区了。
+
+
+## navigator
+在使用navigator的时候，如果在routes.js中设置title为''的话，页面就不会显示，如果要通过参数设置navTitle的话，最好先给routers.js的title给一个默认值然后open的时候设置新的参数。  
+而且如果不设置title，就算open设置了navShow和navTitle页面也还是不会显示。
 
 
 

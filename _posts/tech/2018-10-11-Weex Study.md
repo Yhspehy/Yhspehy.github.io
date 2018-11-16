@@ -41,9 +41,33 @@ refresh在ios测试时，如果下拉的距离超过了viewHeight，那么会执
 
 而且text是不会继承div对css的。
 
+虽然div中也可以绑定值，但是div中的值是不会变化的。
+
+```html
+<div>{{a}}</div>
+
+虽然a的值变化了，但是页面是不会变化的。
+
+<text>{{a}}</text>
+这样页面才会变化。
+```
+
+在使用text-overflow的时候发现文本始终处于ellipsis的状态，感觉代码写的也没有问题，后来发现weex会把`<text></text>`内打空间全部计算进去，如果标签内你换行了，他就会替换成空格占用空间。但是在web中是不会有这个问题的，应该是和`white-space`有关。
+
 ### image
 
 不能使用img，使用image，而且要手动闭合，所有的image要设置width和height。
+
+---
+
+### input
+
+如果ios不想要显示done那一栏，可以设置:hideDoneButton="true"。
+
+官方文档中没有写，但是是有这个方法的。
+
+在使用input的过程中发现，唤起键盘后总是会紧贴input下沿，暂时不知道如何解决。  
+[提了一个issue](https://github.com/apache/incubator-weex/issues/1745)，暂时闲这样，以后自己学习OC的时候再尝试自己解决解决，感觉也不是什么难事～
 
 ---
 
@@ -170,6 +194,14 @@ choosenType(item) {
 常常代码改动后等重新打完包再在手机中刷新，不然就报错，如果报错了就重新保存下。
 
 
+## weex-ui
+
+他的部分Utils还是很好用的。
+注意getPageHeight和getScreenHeight区别。前面减去了顶部的导航栏的高度，后者则是整个屏幕的高度。
+
+
+
+
 ## OVER
 
-是时候从入门到放弃了，真的有点不能忍了！！
+用了一段时间，虽然坑是有的，但是表示可以理解，毕竟这便是使用js制作原生app的困难之处，而且我觉得很多坑用自己的知识也是可以解释的，所以不至于放弃～～
