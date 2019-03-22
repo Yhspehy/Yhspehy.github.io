@@ -185,3 +185,27 @@ w: {
 正则匹配`<`开始的标签，如果匹配成功，则判断是否是普通注释，条件注释，Doctype 和结束标签并做相关处理。如果都不匹配，则说明是要么是匹配到了开始标签，要么就是文本内容。比如： `<div></div>`或则`内容<div></div>`。
 
 如果匹配到了开始标签，则使用 parseStartTag 解析 html，并使用 handleStartTag 来处理获取的 match。
+
+# Vue 存在的一些问题
+
+1. @click 绑定的函数主体不明
+
+我们都知道 vue 中的 click 绑定可以这么写：
+
+```html
+<div @click="handler"></div>
+
+<div @click="handler()"></div>
+```
+
+但是如果这个 handler 是`handler => () => {}`的时候呢，上面这 2 中写法有啥区别呢，会不会执行不同的函数呢？
+
+答案是：还是会执行第一层函数，即第二种写法还是会执行`handler`，并不是直接执行`() => {}`这个函数。
+
+那么其实我们就不应该写`<div @click="handler()"></div>`对不对，会误导人，虽然`<div @click="handler()"></div>`会被编译成`<div @click="() => handler"></div>`，但是这终究还是 vue 解释的，在我们看来还是会不妥，这个问题就应该和 react 一样，一定要规范。
+
+2. vuex 和 v-model 冲突
+
+没啥好的解决办法，只能取的时候取获取 vuex 中的值，然后改变值的时候再调用 vuex 的 mutation。
+
+本来想自己写一个指令来合并那两个操作，但是发现实现不了，因为指令中的 update 监听的是 el 的 vnode，而 vnode 的更新还是需要依靠文档的 input 指令，所以就是实现不了了。
