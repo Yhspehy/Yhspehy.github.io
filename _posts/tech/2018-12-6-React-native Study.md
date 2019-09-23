@@ -5,11 +5,13 @@ tag: 技术
 keywords: React-Native
 ---
 
-# Expo
+# React-Native Study
+
+## Expo
 
 安装 ios 的 Expo 软件，并注册账号，然后即可在网页的 expo 中调试 app 中的页面，也不需要自动保存，还是很方便的。
 
-# React Navigation
+## React Navigation
 
 [doc](https://reactnavigation.org/docs/en/getting-started.html)
 
@@ -40,7 +42,7 @@ headerBackImage:(
 
 如果想实现这个功能，可以在 TabNavigator 外包一层 StackNavigator，然后将可以在各个 tab 页面中跳转的页面添加到 StackNavigator 中，这样这个页面就和 TabNavigator 处在同一级别上。
 
-# Text
+## Text
 
 首行缩进： `<Text>{'\t'}</Text>`
 
@@ -65,16 +67,30 @@ list = lists => {
 
 其实每个圆点，方块等效果都可以用 unicode character 来表示。
 
-# FlatList
+## FlatList
 
 因为 FlatList 继承的是 PureComponent，所以你传入数组的时候，如果要触发更新，就必须更改数组的指针。不然是不会触发更新的，比如 push，它也只是在原先的地址上增加元素，指针没有改变。可以使用 concat 来出发更新。
 
 id 是 string 类型的。
 
-# Fetch
+## Fetch
 
 使用 fetch 的时候要注意带上设置 headers 上的'Content-Type'。
 
-# 使用感受
+## 清除缓存
 
-使用了一天，感觉比 weex 好太多了呀～
+现在 github 上的所有清除缓存插件都已经不维护了，所以现在主要是通过 react-native-fs 来实现这个功能。
+
+此外，react-native-fs 的功能也很强大，可以在缓存目录中读写，获取文件目录等等。
+
+## 视频截取，剪辑
+
+react-native-ffmpeg 和 react-native-fs 互相配合
+
+## 录视频
+
+react-native-camera
+
+## 获取文件目录
+
+react-native-cameraRoll
