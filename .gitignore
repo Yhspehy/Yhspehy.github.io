@@ -3,3 +3,4 @@ _drafts/
 .DS_Store
 .idea/
 gemfile
+.jekyll-cache
