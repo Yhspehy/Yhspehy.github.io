@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Vue 源码学习(2.5.17-beta.0)
-tag: 技术
+tag: Vue
 keywords: Vue
 ---
 
@@ -51,6 +51,7 @@ Vue.extend 的组件的 Super 就是 Vue。VueExtendComponent.extend 的组件�
 2. 接着它会判断 value 是数组还是对象，如果是数组，则判断能否使用对象的`__proto__`属性，如果能用就直接将原型上数组的方法赋给 value 的原型，否则将原型上数组的方法依次 object.defineProperty 到 value 上。然后执行 observeArray，遍历数组的元素并 observe(元素)(返回第一步)。
 3. 如果是对象，则遍历属性并执行 defineReactive。这一步就是响应式监听比较关键第一步，即将所有的属性设置 get，set 函数，当有节点访问这个参数并且存在 dep.target 的时候并自动将 dep 绑定到当前的 watcher 上，如果 watcher 上已有该 dep 则会跳过。当属性值改变时，出发 dep.notify(),一次调用 subs 中 watcher 的 update()。
 4. 如果该属性值是数组或者对象的话则看下面。
+
 5.
 
 ```js

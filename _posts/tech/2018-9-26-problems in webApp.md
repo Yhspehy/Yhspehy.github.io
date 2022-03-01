@@ -1,7 +1,7 @@
 ---
 layout: post
 title: vue开发webApp时所遇到的问题整理
-tag: 技术
+tag: App
 keywords: vue webApp
 ---
 
@@ -80,7 +80,7 @@ function watchTouchEnd(e) {
 
 现在让我们来看看浏览器里实现上述操作的时候会发现啥。
 
-### 假设我们使用的是 fixed 固定底端的 input。
+### 假设我们使用的是 fixed 固定底端的 input
 
 首先出现的是 input 被遮挡问题，在每次切换 safari chrome 后第一次唤起会出现这个问题，之后都不会。  
 其次每次唤起键盘页面都会上移，并且键盘去掉的时候页面不会上移回到之前的位置。
@@ -119,7 +119,7 @@ function watchTouchEnd(e) {
 
 这个方案也有个问题，那就是在 safari 下，input 和键盘之间会有一段空隙，这段空隙就是 safari toolbar 的高度。如果打包成 app 后应该是没有这个问题了，但是 web 调试的时候看起来很别扭。
 
-### 使用 flex 布局将 input 置于底部。
+### 使用 flex 布局将 input 置于底部
 
 同样会出现 input 遮挡问题，页面会上移，但是键盘去掉后会下移回到之前的位置。  
 中间内容块的滚动卡顿。

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: css揭秘阅读笔记
-tag: 技术
+tag: CSS
 keywords: css-magic
 ---
 
@@ -239,16 +239,16 @@ keywords: css-magic
         width: 60%; height: 12px;
         border-radius: 8px;
         overflow: hidden;
-        position: relative; 
+        position: relative;
         margin: 50px auto;
-    }    
+    }
     .progress-enter {  
         height: inherit;
-        background: rgba(180, 160, 120, .2); 
+        background: rgba(180, 160, 120, .2);
     }
     .progress-bg {
         width: 60%; height: inherit;
-        border-radius: 6px; 
+        border-radius: 6px;
         background: linear-gradient(-45deg, #D9CFBB  25%, #C3B393 0, #C3B393 50%,
             #D9CFBB 0, #D9CFBB 75%, #C3B393 0);
         background-size: 16px 16px;
@@ -288,7 +288,7 @@ keywords: css-magic
 
 <style>
     .inner-radius {
-        width: 209px; 
+        width: 209px;
         margin: 29px auto;
         padding: 8px 16px;
         border-radius: 8px;
@@ -857,7 +857,7 @@ background-position: 0 1em;
 
 使用 text-shadow 可以加粗文字。
 
-#### 使用 svg 的 stroke 可以产生空心字效果。
+#### 使用 svg 的 stroke 可以产生空心字效果
 
 ```css
 .hollow-word {
@@ -1152,7 +1152,7 @@ background-position: 0 1em;
   padding: 20px 0;
 }
 
-/* The reflect-loader container */
+/*The reflect-loader container*/
 .reflect-loader {
   position: absolute;
   top: 50%;
@@ -1184,7 +1184,7 @@ background-position: 0 1em;
   background: linear-gradient(0deg, rgba(238, 238, 238, 1), rgba(238, 238, 238, 1) 20%, rgba(238, 238, 238, 0.3));
 }
 
-/* The bar */
+/*The bar*/
 .reflect-bar {
   position: absolute;
   bottom: 0;
@@ -1624,6 +1624,6 @@ to {
 
 ## 结尾
 
-> ### 参考资料：
+> ### 参考资料
 >
 > - css 揭秘

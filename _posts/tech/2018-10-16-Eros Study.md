@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Eros Study
-tag: 技术
+tag: App
 keywords: Eros
 ---
 
@@ -12,7 +12,6 @@ keywords: Eros
 
 用了一天，感觉还不错，而且官方文档写的很详细，这里先记录一下一些容易忘记的点。
 
-
 ## 安装环境
 
 照着官方的文档做就行了，mac最好下一个rvm，安装一个2.5.1版本的ruby，但是这时候gem的版本是2.7.7，文档说要小于等于2.7.6，那我们就只要做一下降级处理就好，记得带上-force。
@@ -21,11 +20,9 @@ keywords: Eros
 
 由于使用的是xcode10，在编译中还发现一个问题。项目中依赖了lstdc++.6.0.9。但是xcode10中已经remove了这个。[解决办法](https://www.jianshu.com/p/6d94278d62b3),由于我只缺少lstdc++.6.0.9，所以我就往4个文件夹中添加了6.0.9的文件，另外几个没有添加。
 
-
 ## Eslint
 
 Eros内置脚手架中，eslint配置不全，导致在编辑器中不生效，建议使用weex的package.json中eslint相关的包来替换eros自带的。
-
 
 ## topBar
 
@@ -35,8 +32,6 @@ Eros内置脚手架中，eslint配置不全，导致在编辑器中不生效，�
 
 所以只要和native.js有关的文件如果更改了，就需要重新打包app。
 
-
-
 ## Iphonex兼容
 
 如果不实用导航栏，那么在iphonex中发现页面会占据刘海的区。
@@ -44,12 +39,10 @@ Eros内置脚手架中，eslint配置不全，导致在编辑器中不生效，�
 
 使用导航栏的时候，statusBarHeight的值为0，所以如果这个时候你隐藏了导航栏，那么页面就到刘海区了。
 
-
 ## navigator
+
 在使用navigator的时候，如果在routes.js中设置title为''的话，页面就不会显示，如果要通过参数设置navTitle的话，最好先给routers.js的title给一个默认值然后open的时候设置新的参数。  
 而且如果不设置title，就算open设置了navShow和navTitle页面也还是不会显示。
-
-
 
 ## 热更新
 
@@ -59,12 +52,9 @@ Eros内置脚手架中，eslint配置不全，导致在编辑器中不生效，�
 
 [链接](https://bmfe.github.io/eros-docs//#/zh-cn/QA?id=q-%E7%83%AD%E5%88%B7%E6%96%B0%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8%EF%BC%88%E6%89%8B%E5%8A%A8%E6%8C%87%E5%AE%9A%E6%9C%8D%E5%8A%A1%E5%9C%B0%E5%9D%80%EF%BC%89)
 
-
 ## tool
 
 copyString只能复制string，复制其他类型的数据。
-
-
 
 ## 使用iconfont
 
@@ -72,13 +62,9 @@ copyString只能复制string，复制其他类型的数据。
 
 具体使用方式可以参照[官方文档](https://bmfe.github.io/eros-docs//#/zh-cn/base_extend?id=%E5%8A%A0%E8%BD%BD-iconfont-%E8%B5%84%E6%BA%90)。
 
-
-
 ## 将内置包更新，更新到native中的代码中
 
 `eros pack <platform>`
-
-
 
 ## 打更新包
 
@@ -87,6 +73,4 @@ copyString只能复制string，复制其他类型的数据。
 3. 在eros-publish/server/config中设置staticRealPath，设置成服务器上程序包的文件路径。这样在第二步中他访问的就是你服务器上程序包的路径。
 4. 在`eros-native.js`中设置bundleUpdate，即每次打开app所调用服务器上检查更新的接口，判断是否需要更新。
 
-
 注意：官方文档中路径都是写localhost的，但是其实手机上访问localhost是访问不到电脑上的数据的，所以这里要改成电脑的ip。而且eros-publish中的app/check是get请求，不是post，官方文档有错误！
-

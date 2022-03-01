@@ -1,7 +1,7 @@
 ---
 layout: post
 title: React-Native Study
-tag: 技术
+tag: App
 keywords: React-Native
 ---
 

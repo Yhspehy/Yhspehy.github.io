@@ -1,13 +1,13 @@
 ---
 layout: post
 title: Weex 学习笔记以及踩坑记录
-tag: 技术
+tag: App
 keywords: Weex
 ---
 
 # 背景
-自从关注移动端性能之后发现需要学习的东西越来越多，先是浏览器的动销分析，然后cordova使用，再到现在多weex学习，emm，真好！
 
+自从关注移动端性能之后发现需要学习的东西越来越多，先是浏览器的动销分析，然后cordova使用，再到现在多weex学习，emm，真好！
 
 然后我又接触到了eros。。。
 
@@ -20,7 +20,6 @@ keywords: Weex
 如果要动态绑定样式，可以通过切换class来实现
 
 `:class="[exp?'class1': 'class2']"`
-
 
 ### refresh样式
 
@@ -106,9 +105,10 @@ recycle-list在渲染过程中会出现一些问题，已经提issue。
 
 可以采取的办法是：设置相同宽度对border-bottom，并且color为transparent；
 
-
 ---
+
 ## cell
+
 ```html
 由于 <cell> 本身是一个容器，其布局由 <list> 进行管理，你不能给 <cell> 设定flex值。 <cell>的宽度等于父组件 <list> 的宽度，并且 <cell> 高度自适应，指定 margin 样式也不起作用。
 
@@ -121,19 +121,18 @@ recycle-list在渲染过程中会出现一些问题，已经提issue。
 
 第一次用的时候app直接崩溃了，原因是调用`this.$refs.dom`返回的是一个数组，但是你要的单独的那个节点，所以你还这样使用`this.$refs.dom[0]`
 
-
 ---
 
 ## 下拉列表
 
 在写下拉列表的时候要注意几个问题：
+
 1. 因为weex没有z-index和display，所以当你使用opacity的时候会发现你把下拉列表放到dom最下面的时候会覆盖下拉列表下面内容的点击事件。
 2. 如果上面是下拉列表，下面是textarea输入框的话，要实现带transition的功能，而且不覆盖textarea的点击，有两种写法。
 
 第一种使用opacoty，但是定位top要定位可见区域外，并且要控制transition-timing-function，不能匀速，进入时先快后慢，这样才能让人感觉像是比较舒服的过渡。
 
 第二种使用v-if，这样就不需要控制top等定位的位置，但是需要注意的必须要等到元素渲染了再执行过渡效果。所以这里就需要2个变量来控制节点的展示。第一个变量控制v-if的展示，第二个变量控制过渡的展示。进入的时候可以用nextTick，退出的时候可以使用setTimtout。具体实现可以看下面代码：
-
 
 ```html
 <div v-if="isExpand"
@@ -178,6 +177,7 @@ choosenType(item) {
 ```
 
 ---
+
 ## 实现collapse
 
 实现这个只需要v-if，但是要做动效发现很难，主要是无法获取隐藏文本的高度，想做这个效果也是可以的，就是很麻烦。
@@ -193,14 +193,10 @@ choosenType(item) {
 
 常常代码改动后等重新打完包再在手机中刷新，不然就报错，如果报错了就重新保存下。
 
-
 ## weex-ui
 
 他的部分Utils还是很好用的。
 注意getPageHeight和getScreenHeight区别。前面减去了顶部的导航栏的高度，后者则是整个屏幕的高度。
-
-
-
 
 ## OVER
 

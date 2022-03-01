@@ -1,4 +1,10 @@
-# ShadowSocks
+---
+layout: post
+title: shadowsocks
+tag: VPN
+keywords: shadowsocks
+---
+
 
 ## 安装
 
@@ -10,7 +16,7 @@ ssh root@ip
 
 ### 安装pip
 
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+curl <https://bootstrap.pypa.io/get-pip.py> -o get-pip.py
 
 执行： python get-pip.py
 
@@ -23,6 +29,7 @@ pip install shadowsocks
 vi /etc/shadowsocks.json
 
 ```js
+
 {
     "server":"0.0.0.0",     // 填写你的服务器地址
     "server_port":50013,    // 服务器暴露的断开
@@ -97,4 +104,3 @@ firewall-cmd --zone=public --add-port=80/tcp(永久生效再加上 --permanent)
 ```js
 firewall-cmd --zone=public --list-ports
 ```
-
