@@ -149,4 +149,4 @@ QUIC 协议基于 UDP 实现摒弃了五元组的概念，使用 64 位的随机
 > - HTTP,HTTP2.0,SPDY,HTTPS 你应该知道的一些事 [这里](http://www.alloyteam.com/2016/07/httphttp2-0spdyhttps-reading-this-is-enough/)
 > - HTTP2.0 的奇妙日常 [这里](http://www.alloyteam.com/2015/03/http2-0-di-qi-miao-ri-chang)
 > - SSL vs. TLS - What's the Difference? [这里](https://www.globalsign.com/en/blog/ssl-vs-tls-difference/)
-> - 图解 | 为什么 HTTP3.0 使用 UDP 协议? [这里](https://cloud.tencent.com/developer/article/1866236)
+> - 为什么 HTTP3.0 使用 UDP 协议? [这里](https://cloud.tencent.com/developer/article/1866236)
